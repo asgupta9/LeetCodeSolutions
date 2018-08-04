@@ -1,0 +1,37 @@
+int bs1(vector<int>& nums, int l, int r, int t){
+    while(l<r){
+        int m=(l+r)/2;
+        if( (m==0 || nums[m-1]<t) && nums[m]==t) return m;
+        else if(nums[m]<t)l=m+1;
+        else r=m-1;      
+    }
+    if(nums[l]==t) return l;
+    else return -1;
+}
+
+int bs2(vector<int>& nums, int l, int r, int t){
+    while(l<r){
+        int m=(l+r)/2;
+        if( (m==nums.size()-1 || nums[m+1]>t) && nums[m]==t) return m;
+        else if(nums[m]<=t)l=m+1;
+        else r=m-1;      
+    }
+    if(nums[l]==t) return l;
+    else return -1;
+}
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int t) {
+        vector<int> V;
+        int n=nums.size();
+        int start=-1,end=-1;
+        if(nums.size()>0){
+            start=bs1(nums,0,n-1,t);
+            end=bs2(nums,0,n-1,t);
+        }
+        V.push_back(start);
+        V.push_back(end);
+        return V;
+    }
+};
