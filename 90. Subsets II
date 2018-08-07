@@ -1,0 +1,30 @@
+//used hashing to identify the duplicate set
+
+const long long int M=1e9+7;
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& S) {
+        int n=S.size();
+        vector<vector<int>> ans;
+        map<long long int,bool> mp;
+        for(int i=0;i<pow(2,n);i++){
+            vector<int> tmp;
+            long long int cnt=0;
+            for(int j=0;j<n;j++){
+                if(i&(1<<j)){
+                    tmp.push_back(S[j]);
+                    cnt+=(S[j]+100)*(S[j]+100)*(S[j]+100);
+                    cnt%=M;
+                }
+            }
+            if(mp.find(cnt)==mp.end()){   // somecondition that will certain that this set was not created earlier
+                ans.push_back(tmp);
+                mp[cnt]=true;
+
+            }
+            
+        }
+        return ans;    
+    }
+};
+
