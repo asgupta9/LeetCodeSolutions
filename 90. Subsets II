@@ -1,6 +1,5 @@
 //used hashing to identify the duplicate set
-
-const long long int M=1e9+7;
+const long long int M=1e9+7;    //strong candidate for the hashing modulo
 class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& S) {
@@ -13,16 +12,14 @@ public:
             for(int j=0;j<n;j++){
                 if(i&(1<<j)){
                     tmp.push_back(S[j]);
-                    cnt+=(S[j]+100)*(S[j]+100)*(S[j]+100);
+                    cnt+=(S[j]+100)*(S[j]+100)*(S[j]+100);  //to overcome the negative numbers
                     cnt%=M;
                 }
             }
-            if(mp.find(cnt)==mp.end()){   // somecondition that will certain that this set was not created earlier
+            if(mp.find(cnt)==mp.end()){   // condition that will certain that this set was not created earlier
                 ans.push_back(tmp);
                 mp[cnt]=true;
-
             }
-            
         }
         return ans;    
     }
