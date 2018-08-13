@@ -1,0 +1,26 @@
+
+class Solution {
+public:
+    bool canPartition(vector<int>& A) {
+        int n=A.size();
+        int totalsum=0;
+        for(int i=0;i<n;i++) totalsum+=A[i];
+        if(totalsum%2!=0)return false;
+        int row = n+1, col = totalsum/2+10;
+        bool Arr[row][col];
+        memset(Arr, false, sizeof(Arr));
+        Arr[0][0]=1;
+        // for(int i=0;i<row;i++) Arr[i][0]=1;
+        for(int i=1;i<row;i++) {
+            for(int j=0;j<col;j++){
+                Arr[i][j]= Arr[i-1][j];
+                if( (j-A[i-1]) >=0) Arr[i][j]=Arr[i][j] || Arr[i-1][j-A[i-1]];
+            }
+        }
+        
+        int desired=totalsum/2;
+        return Arr[n][desired];
+
+        
+    }
+};
