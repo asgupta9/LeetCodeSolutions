@@ -1,0 +1,19 @@
+double POW(double x, int n) {
+    double ans=1;
+    long long int r=n;
+    if(r<0) x=1/x,r=-1*r;
+    while(r>0){
+        if(r%2!=0){
+            ans=ans*x;
+        }
+        r/=2;
+        x=x*x;
+    }
+    return ans;
+}
+class Solution {
+public:
+    double myPow(double x, int n) {
+        return POW(x,n);    
+    }
+};
