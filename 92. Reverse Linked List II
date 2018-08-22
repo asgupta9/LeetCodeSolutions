@@ -1,0 +1,79 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+     ListNode* reverseList(ListNode* head) {
+        if(head==NULL || head->next == NULL) return head;
+        if(head->next->next == NULL){
+            ListNode * last = head->next;
+            head->next = NULL;
+            last->next = head;
+            return last;
+        } 
+        ListNode * first = head;
+        ListNode * prev = head;
+        head = head->next;
+        ListNode * pnext = head->next;
+        while(true){
+            head->next = prev;
+            if(pnext->next == NULL){
+                pnext->next = head;
+                head = pnext;
+                break;
+            }
+            prev = head;
+            head = pnext;
+            
+            pnext = pnext->next;
+        }
+        first->next = NULL;
+        return head;
+    }
+    
+    ListNode* reverseBetween(ListNode* head, int m, int n) {  
+        ListNode * fakeNodeStart = new ListNode(0);
+        fakeNodeStart->val = 0;
+        fakeNodeStart->next = head;
+        head=fakeNodeStart;
+        ListNode * fakeNodeEnd = new ListNode(0);
+        fakeNodeEnd->val = 0;
+        fakeNodeEnd->next = NULL;
+        m++, n++;
+        ListNode * temp = head;
+        ListNode * prev;
+        for (int i=1; i<m; i++){
+            prev = temp;
+            temp = temp->next;
+        }
+        prev->next = NULL;
+        ListNode * first = prev;   
+        ListNode * start = temp;   
+        prev = temp;
+        for (int i=m; i<=n; i++){
+            prev = temp;
+            temp = temp->next;
+        }
+        prev->next = NULL;
+        ListNode * second = temp;
+        if(second==NULL){
+            second=fakeNodeEnd;
+        }
+        ListNode * newstart = reverseList(start);
+        ListNode * end;
+        temp = newstart;
+        while(temp->next!=NULL)
+            temp=temp->next;
+        end = temp;   
+        first->next = newstart;
+        end->next = second;
+        if(second==fakeNodeEnd)
+            end->next=NULL;
+        return head->next;
+    }
+};
