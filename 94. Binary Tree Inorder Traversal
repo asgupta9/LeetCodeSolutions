@@ -7,6 +7,9 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ 
+// Recursive solution
+
 class Solution {
 public:
     vector<int> ans;
@@ -19,5 +22,32 @@ public:
         f(cur->left);
         ans.push_back(cur->val);
         f(cur->right);
+    }
+};
+
+// iterative solution using vectors
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root==NULL) return ans;
+        vector<TreeNode*>curstack;
+        TreeNode *cur=root;
+        if(cur!=NULL)curstack.push_back(cur);
+        cur=cur->left;
+        while(true){
+            if(cur==NULL){
+                if(curstack.size()==0) break;
+                cur=curstack[curstack.size()-1];
+                ans.push_back(cur->val);
+                cur=cur->right;
+                curstack.pop_back();
+            }else{
+                curstack.push_back(cur);
+                cur=cur->left;
+            }
+        }
+        return ans;
     }
 };
