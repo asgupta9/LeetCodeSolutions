@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int i,j,cnt=0,n=s.size();
+        for(i=0;i<(2*n-1);i++){
+            if(i%2==0){
+                cnt++;
+                int curi=i/2-1,curj=i/2+1;
+                while(curi>=0 && curj<n && s[curi]==s[curj]){
+                    curi--,curj++;
+                    cnt++;
+                }
+            }else{
+                int curi=(i-1)/2,curj=(i+1)/2;
+                while(curi>=0 && curj<n && s[curi]==s[curj]){
+                    curi--,curj++;
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+};
