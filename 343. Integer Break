@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int integerBreak(int n) {
+        int dp[60];
+        memset(dp,0,sizeof(dp));
+        dp[0]=0;
+        dp[1]=1;
+        dp[2]=1;
+        dp[3]=2;
+        
+        if(n<=3) return dp[n];
+        int ans=0;
+        
+        for(int i=4;i<=n;i++){
+            //find dp(i)
+            for(int j=1;j<=i;j++){
+                dp[i]=max(j*(i-j), max(dp[i], max(j*dp[i-j], dp[j]*dp[i-j])));
+            }
+        }
+        return dp[n];
+    }
+};
