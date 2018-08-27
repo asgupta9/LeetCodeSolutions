@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int i,cnt=0,mxlen=0,n=s.size(),len;
+        string ans="";
+        for(i=0;i<(2*n-1);i++){
+            if(i%2==0){
+                cnt++;
+                len=1;
+                int curi=i/2-1,curj=i/2+1;
+                while(curi>=0 && curj<n && s[curi]==s[curj]){
+                    curi--,curj++;
+                    len+=2;
+                }
+                curi++,curj--;
+                if(len>mxlen){
+                    ans=s.substr(curi,curj-curi+1);
+                    mxlen=curj-curi+1;
+                }
+                // cout<<i<<" "<<curi<<" "<<curj<<" "<<ans<<endl;
+            }else{
+                int curi=(i-1)/2,curj=(i+1)/2;
+                len=0;
+                while(curi>=0 && curj<n && s[curi]==s[curj]){
+                    curi--,curj++;
+                    len+=2;
+                }
+                curi++,curj--;
+                if(curi>curj)continue;
+                if(len>mxlen){
+                    ans=s.substr(curi,curj-curi+1);
+                    mxlen=curj-curi+1;
+                }
+                // cout<<i<<" "<<curi<<" "<<curj<<" "<<ans<<endl;
+            }
+        }
+        return ans;
+    }
+};
