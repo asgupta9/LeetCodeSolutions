@@ -1,0 +1,55 @@
+class Solution {
+public:
+
+    int strStr(string hay, string nee) {
+        int n=hay.size(), m=nee.size();
+        if(m==0) return 0;
+        int lps[m];
+        computelps(nee, lps, m);
+        // for(int i=0;i<m;i++){
+        //     cout<<lps[i]<<" ";
+        // }
+        // cout<<endl;
+        return findpos(lps, hay, nee, n, m);
+    }
+    
+    int findpos(int lps[], string hay, string needle, int n, int m){
+        int i=0,j=0;
+        while(i<n){
+            // cout<<i<<" "<<j<<endl;
+            if(j<m && hay[i]==needle[j]){
+                i++;
+                j++;
+            }else{
+                if(j!=0){
+                    j=lps[j-1];
+                }else{
+                    i++;
+                }
+            }
+            if(j==m){
+                return (i-j);
+            }
+        }
+        return -1;
+    }
+    
+    void computelps(string s, int lps[], int n){
+        lps[0]=0;
+        int i=1,j=0;
+        while(i<n){
+            if(s[i]==s[j]){
+                lps[i]=j+1;
+                i++;
+                j++;
+            }else{
+                if(j!=0){
+                    j=lps[j-1];
+                }else{
+                    lps[i]=0;
+                    i++;
+                }
+            }            
+        }
+    }
+};
