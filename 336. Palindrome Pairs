@@ -1,0 +1,55 @@
+class Solution {
+public:
+    bool ispalindrome(string s){
+        int i=0, j=s.size()-1;
+        while(i<j){
+            if(s[i++]!=s[j--])return false;
+        }
+        return true;
+    }
+    
+    vector<vector<int>> palindromePairs(vector<string>& words) {
+        vector<vector<int>> ans;
+        unordered_map<string, int> mp;
+        int n=words.size();
+        if(n==0) return ans;
+        
+        for(int i=0;i<n;i++){
+            string tmp = words[i];
+            reverse(tmp.begin(), tmp.end());
+            //cout<<tmp<<endl;
+            mp[tmp] = i;
+        }
+        if(mp.find("")!=mp.end()){
+            for(int i=0;i<n;i++){
+                if(ispalindrome(words[i]) && i!=mp[""]){
+                    ans.push_back(vector<int>{mp[""],i});
+                    ans.push_back(vector<int>{i,mp[""]});
+                }
+            }
+        }
+        mp.erase("");
+        for(int i=0;i<n;i++){
+            if(words[i]!=""){
+                for(int j=0;j<words[i].size();j++){
+                    string tmp1=words[i].substr(0,j);   // left part 
+                    string tmp2=words[i].substr(j,words[i].size()-j);      // right part
+
+                    //cout<<"tmp1-"<<tmp1<<" tmp2-"<<tmp2<<endl;
+
+                    if(mp.find(tmp1)!=mp.end() && ispalindrome(tmp2) && mp[tmp1]!=i){  //left|right|mp()
+                        ans.push_back(vector<int>{i,mp[tmp1]});
+                        //cout<<"found"<<" "<<mp[tmp1]<<" "<<i<<endl;
+                        
+                    }    
+
+                    if(mp.find(tmp2)!=mp.end() && ispalindrome(tmp1) && mp[tmp2]!=i){    //mp()|left|right
+                        ans.push_back(vector<int>{mp[tmp2],i});
+                        //cout<<"found"<<" "<<mp[tmp2]<<" "<<i<<endl;   
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
