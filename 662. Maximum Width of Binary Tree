@@ -1,0 +1,26 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int ans=0,left=1,curdepth=1;
+    map<int,int> mp;
+    int widthOfBinaryTree(TreeNode* root) {
+        bfs(root, 1, 1);
+        return ans;
+    }
+    void bfs(TreeNode* root, int pos, int depth){
+        if(mp.find(depth)==mp.end()) mp[depth]=pos;
+        ans=max(ans, pos-mp[depth]+1);
+        if(root->left!=NULL) 
+            bfs(root->left, 2*pos, depth+1);
+        if(root->right!=NULL)
+            bfs(root->right, 2*pos+1, depth+1);     
+    }
+};
