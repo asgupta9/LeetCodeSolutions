@@ -1,5 +1,5 @@
 # LeetCode 
-Solved problems of LeetCode algorithms
+Leetcode problems solutions
 
 ## Contribute if :
 1 if there is no solution available 
