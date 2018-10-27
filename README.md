@@ -2,8 +2,5 @@
 Leetcode problems solutions
 
 ## Contribute if :
-1 if there is no solution available 
-
-2 if you have better solution in terms of space or time 
-
-
+* There is no solution available for any problem. 
+* You have a better optimized solution in terms of Space and Time complexity.
